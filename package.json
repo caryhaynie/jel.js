@@ -1,0 +1,25 @@
+{
+  "name": "jel.js",
+  "description": "the json expression language",
+  "version": "0.1.0",
+  "author": "Cary Haynie <cary.haynie@gmail.com>",
+  "scripts":
+  {
+    "test": "node ./node_modules/.bin/mocha -R spec test/test_jel.js"
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/caryhaynie/jel.js"
+  },
+  "devDependencies":
+  {
+    "mocha": "latest",
+    "expect.js": "latest"
+  },
+  "license": "MIT",
+  "engine":
+  {
+    "node": ">=0.6"
+  }
+}
