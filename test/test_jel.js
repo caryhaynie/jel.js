@@ -12,27 +12,38 @@ describe("jel", function() {
                 done();
             });
         });
-        it("should take a stream object and read the jel data from the stream", function(done) {
-            jel.parse(fs.createReadStream("test/test_machine.jel"), function(err, jm) {
-                expect(err).to.not.be.ok();
-                expect(jm).to.be.ok();
-                done();
-            });
-        });
-        it("should return a JelMachine object on success", function(done) {
+        it("should return a JelModule object on success", function(done) {
             jel.parse("test/test_machine.jel", function(err, jm) {
                 expect(err).to.not.be.ok();
                 expect(jm).to.be.ok();
-                expect(jm).to.be.a(jel.JelMachine);
+                expect(jm).to.be.a(jel.JelModule);
                 done();
             });
         });
         it("should return an error if the supplied filename can't be found", function(done) {
             jel.parse("test/not_found.jel", function(err, jm) {
-                expect(err).to.be.ok();
+                expect(err).to.be.an(Error);
                 expect(jm).to.not.be.ok();
-                expect(err).to.eql("invalid filename");
                 done();
+            });
+        });
+    });
+    describe("JelModule", function() {
+        var module = null;
+        before(function(done) {
+            jel.parse("test/test_machine.jel", function (err, jm) {
+                module = jm;
+                done();
+            });
+        });
+        describe("#getMachine()", function() {
+            it("should return a valid JelMachine for an existing name", function() {
+                var m = module.getMachine("machine1");
+                expect(m).to.be.a(jel.JelMachine);
+            });
+            it("should return undefined for an non-existing name", function() {
+                var m = module.getMachine("not-found");
+                expect(m).to.be(undefined);
             });
         });
     });

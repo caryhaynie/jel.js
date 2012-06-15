@@ -1,0 +1,10 @@
+{
+  "machines":
+  {
+    "machine1":
+    {
+      "type": "js_eval",
+      "eval": "console.log(\"Hello, World!\");"
+    }
+  }
+}
