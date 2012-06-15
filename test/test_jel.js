@@ -31,7 +31,7 @@ describe("jel", function() {
     describe("JelModule", function() {
         var module = null;
         before(function(done) {
-            jel.parse("test/test_machine.jel", function (err, jm) {
+            jel.parse("test/test_machine.jel", function(err, jm) {
                 module = jm;
                 done();
             });
@@ -44,6 +44,22 @@ describe("jel", function() {
             it("should return undefined for an non-existing name", function() {
                 var m = module.getMachine("not-found");
                 expect(m).to.be(undefined);
+            });
+        });
+    });
+    describe("JelMachine", function() {
+        var machine = null;
+        before(function(done) {
+            jel.parse("test/test_machine.jel", function(err, jm) {
+                machine = jm.getMachine("machine1");
+                done();
+            });
+        });
+        describe("#evaluate()", function() {
+            it("it should require a JelState parameter", function() {
+                expect((function() { machine.evaluate(null); })).to.throwError();
+                var state = new jel.JelState();
+                expect((function() { machine.evaluate(state); })).to.not.throwError();
             });
         });
     });

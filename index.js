@@ -30,6 +30,7 @@ function JelMachine(tree) {
 JelMachine.prototype = Object.create(events.EventEmitter.prototype, { constructor: { value: JelMachine } });
 
 JelMachine.prototype.evaluate = function(state) {
+    if (!(state instanceof JelState)) { throw Error("parameter must be a JelState"); }
 };
 
 // JelParser parses a JSON file to create a JelMachine object.
@@ -73,5 +74,5 @@ exports.parse = module.exports.parse = parse;
 exports.JelMachine = module.exports.JelMachine = JelMachine;
 exports.JelModule = module.exports.JelModule = JelModule;
 exports.JelParser = module.exports.JelParser = JelParser;
-exports.JelParser = module.exports.JelState = JelParser;
+exports.JelState = module.exports.JelState = JelState;
 
