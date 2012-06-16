@@ -12,7 +12,7 @@ function JelModule(tree) {
 
     Object.keys(this._srcTree.machines).forEach(function(elem, idx, arr) {
         self._machines[elem] = Object.create(JelMachine.prototype, {});
-        JelMachine.prototype.constructor.apply(self._machines[elem], self._srcTree[elem]);
+        JelMachine.prototype.constructor.call(self._machines[elem], self._srcTree.machines[elem]);
     }, null);
 };
 
@@ -29,8 +29,22 @@ function JelMachine(tree) {
 
 JelMachine.prototype = Object.create(events.EventEmitter.prototype, { constructor: { value: JelMachine } });
 
+JelMachine.prototype.getRootExpression = function() { return this._srcTree; };
+
 JelMachine.prototype.evaluate = function(state) {
-    if (!(state instanceof JelState)) { throw Error("parameter must be a JelState"); }
+    if (!(Object.getPrototypeOf(state) == JelState.prototype)) { throw Error("parameter must be a JelState"); }
+    return this.evalExpression(state, this.getRootExpression());
+};
+
+JelMachine.prototype.evalExpression = function(state, exprObj) {
+    switch (exprObj.type) {
+        case "js_eval":
+            return eval(exprObj.eval);
+            break;
+        default:
+            throw Error("unknown expression type");
+            break;
+    }
 };
 
 // JelParser parses a JSON file to create a JelMachine object.

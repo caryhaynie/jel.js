@@ -4,7 +4,7 @@
     "machine1":
     {
       "type": "js_eval",
-      "eval": "console.log(\"Hello, World!\");"
+      "eval": "console.log(\"Hello, World!\"); true"
     }
   }
 }

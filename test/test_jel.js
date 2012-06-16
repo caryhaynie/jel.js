@@ -1,5 +1,6 @@
 var expect = require("expect.js");
 var fs = require("fs");
+var util = require("util");
 
 var jel = require("../");
 
@@ -52,14 +53,20 @@ describe("jel", function() {
         before(function(done) {
             jel.parse("test/test_machine.jel", function(err, jm) {
                 machine = jm.getMachine("machine1");
+                expect(machine).to.be.ok();
                 done();
             });
         });
         describe("#evaluate()", function() {
-            it("it should require a JelState parameter", function() {
+            it("should require a JelState parameter", function() {
                 expect((function() { machine.evaluate(null); })).to.throwError();
                 var state = new jel.JelState();
                 expect((function() { machine.evaluate(state); })).to.not.throwError();
+            });
+            it("should correctly evaluate the expression tree, and return the result", function() {
+                var state = new jel.JelState();
+                var result = machine.evaluate(state);
+                expect(result).to.eql(true);
             });
         });
     });
