@@ -41,6 +41,31 @@ JelMachine.prototype.evalExpression = function(state, exprObj) {
         case "js_eval":
             return eval(exprObj.eval);
             break;
+        case "if_expr":
+            if (this.evalExpression(state, exprObj.test)) {
+                if (exprObj.block != undefined) {
+                    return this.evalExpression(state, exprObj.block);
+                }
+            }
+            break;
+        case "and_expr":
+            if (this.evalExpression(state, exprObj.lhs) && this.evalExpression(state, exprObj.rhs)) {
+                if (exprObj.block != undefined) {
+                    return this.evalExpression(state, exprObj.block);
+                }
+            }
+            break;
+        case "or_expr":
+            if (this.evalExpression(state, exprObj.lhs) || this.evalExpression(state, exprObj.lhs)) {
+                if (exprObj.block != undefined) {
+                    return this.evalExpression(state, exprObj.block);
+                }
+            }
+            break;
+        case "true":
+            return true;
+        case "false":
+            return false;
         default:
             throw Error("unknown expression type");
             break;

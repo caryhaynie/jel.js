@@ -5,6 +5,24 @@
     {
       "type": "js_eval",
       "eval": "console.log(\"Hello, World!\"); true"
+    },
+    "true_machine":
+    {
+      "type": "js_eval",
+      "eval": "true"
+    },
+    "if_test":
+    {
+      "type": "if_expr",
+      "test":
+      {
+        "type": "true"
+      },
+      "block":
+      {
+        "type": "js_eval",
+        "eval": "console.log(\"'If' test passed!\")"
+      }
     }
   }
 }

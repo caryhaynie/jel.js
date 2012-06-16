@@ -50,22 +50,29 @@ describe("jel", function() {
     });
     describe("JelMachine", function() {
         var machine = null;
+        var true_machine = null;
+        var if_machine = null;
         before(function(done) {
             jel.parse("test/test_machine.jel", function(err, jm) {
                 machine = jm.getMachine("machine1");
+                true_machine = jm.getMachine("true_machine");
+                if_machine = jm.getMachine("if_test");
                 expect(machine).to.be.ok();
+                expect(true_machine).to.be.ok();
+                expect(if_machine).to.be.ok();
                 done();
             });
         });
         describe("#evaluate()", function() {
             it("should require a JelState parameter", function() {
-                expect((function() { machine.evaluate(null); })).to.throwError();
+                expect((function() { true_machine.evaluate(null); })).to.throwError();
                 var state = new jel.JelState();
-                expect((function() { machine.evaluate(state); })).to.not.throwError();
+                expect((function() { true_machine.evaluate(state); })).to.not.throwError();
             });
             it("should correctly evaluate the expression tree, and return the result", function() {
                 var state = new jel.JelState();
                 var result = machine.evaluate(state);
+                var result2 = if_machine.evaluate(state);
                 expect(result).to.eql(true);
             });
         });
