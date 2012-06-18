@@ -38,24 +38,24 @@ JelMachine.prototype.evaluate = function(state) {
 
 JelMachine.prototype.evalExpression = function(state, exprObj) {
     switch (exprObj.type) {
-        case "js_eval":
-            return eval(exprObj.eval);
+        case "js":
+            return eval(exprObj.script);
             break;
-        case "if_expr":
+        case "if":
             if (this.evalExpression(state, exprObj.test)) {
                 if (exprObj.block != undefined) {
                     return this.evalExpression(state, exprObj.block);
                 }
             }
             break;
-        case "and_expr":
+        case "and":
             if (this.evalExpression(state, exprObj.lhs) && this.evalExpression(state, exprObj.rhs)) {
                 if (exprObj.block != undefined) {
                     return this.evalExpression(state, exprObj.block);
                 }
             }
             break;
-        case "or_expr":
+        case "or":
             if (this.evalExpression(state, exprObj.lhs) || this.evalExpression(state, exprObj.lhs)) {
                 if (exprObj.block != undefined) {
                     return this.evalExpression(state, exprObj.block);
@@ -66,6 +66,15 @@ JelMachine.prototype.evalExpression = function(state, exprObj) {
             return true;
         case "false":
             return false;
+        case "get":
+            return state.getLocal(exprObj.name);
+        case "set":
+            var value = this.evalExpression(state, exprObj.block);
+            state.setLocal(exprObj.name) = value;
+            break;
+        case "emit":
+            state.emit(exprObj.name, exprObj.block);
+            break;
         default:
             throw Error("unknown expression type");
             break;

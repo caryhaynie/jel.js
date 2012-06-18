@@ -3,25 +3,24 @@
   {
     "machine1":
     {
-      "type": "js_eval",
-      "eval": "console.log(\"Hello, World!\"); true"
+      "type": "js",
+      "script": "console.log(\"Hello, World!\"); true"
     },
     "true_machine":
     {
-      "type": "js_eval",
-      "eval": "true"
+      "type": "true"
     },
     "if_test":
     {
-      "type": "if_expr",
+      "type": "if",
       "test":
       {
         "type": "true"
       },
       "block":
       {
-        "type": "js_eval",
-        "eval": "console.log(\"'If' test passed!\")"
+        "type": "js",
+        "script": "console.log(\"'If' test passed!\")"
       }
     }
   }
