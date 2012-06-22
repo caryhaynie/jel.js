@@ -52,14 +52,20 @@ describe("jel", function() {
         var machine = null;
         var true_machine = null;
         var if_machine = null;
+        var and_machine = null;
+        var or_machine = null;
         before(function(done) {
             jel.parse("test/test_machine.jel", function(err, jm) {
                 machine = jm.getMachine("machine1");
                 true_machine = jm.getMachine("true_machine");
                 if_machine = jm.getMachine("if_test");
+                and_machine = jm.getMachine("and_test");
+                or_machine = jm.getMachine("or_test");
                 expect(machine).to.be.ok();
                 expect(true_machine).to.be.ok();
                 expect(if_machine).to.be.ok();
+                expect(and_machine).to.be.ok();
+                expect(or_machine).to.be.ok()
                 done();
             });
         });
@@ -73,7 +79,12 @@ describe("jel", function() {
                 var state = new jel.JelState();
                 var result = machine.evaluate(state);
                 var result2 = if_machine.evaluate(state);
+                var result3 = and_machine.evaluate(state);
+                var result4 = or_machine.evaluate(state);
                 expect(result).to.eql(true);
+                expect(result2).to.be(undefined);
+                expect(result3).to.be(false);
+                expect(result4).to.be(undefined);
             });
         });
     });

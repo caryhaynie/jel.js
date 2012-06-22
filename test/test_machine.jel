@@ -22,6 +22,40 @@
         "type": "js",
         "script": "console.log(\"'If' test passed!\")"
       }
+    },
+    "and_test":
+    {
+      "type": "and",
+      "lhs":
+      {
+        "type": "true"
+      },
+      "rhs":
+      {
+        "type": "false"
+      },
+      "block":
+      {
+        "type": "js",
+        "script": "console.log(\"Should not see this\")"
+      }
+    },
+    "or_test":
+    {
+      "type": "or",
+      "lhs":
+      {
+        "type": "true"
+      },
+      "rhs":
+      {
+        "type": "false"
+      },
+      "block":
+      {
+        "type": "js",
+        "script": "console.log(\"Should see this\")"
+      }
     }
   }
 }
